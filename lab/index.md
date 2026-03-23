@@ -18,3 +18,6 @@ import LabStep from '@site/src/components/LabStep';
 aws --version
 kubectl version
 docker --version
+```
+</div> 
+</LabStep>
