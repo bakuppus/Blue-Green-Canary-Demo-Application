@@ -3,33 +3,105 @@ title: Blue-Green & Canary Deployment on Kubernetes
 tags: [Kubernetes, Deployment, Canary, DevOps]
 ---
 
+<style>{`
+.lab-container {
+  margin-top: 30px;
+}
+
+.lab-actions a {
+  margin-right: 10px;
+  padding: 10px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  border: 1px solid #e5e7eb;
+  display: inline-block;
+}
+
+.lab-actions .primary {
+  background: #22c55e;
+  color: white;
+}
+
+.lab-timeline {
+  position: relative;
+  padding-left: 40px;
+  margin-top: 30px;
+}
+
+.lab-timeline::before {
+  content: '';
+  position: absolute;
+  left: 18px;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(to bottom, #6366f1, #22c55e);
+}
+
+.lab-step {
+  position: relative;
+  margin-bottom: 40px;
+}
+
+.lab-step-number {
+  position: absolute;
+  left: -4px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.lab-card {
+  margin-left: 40px;
+  padding: 20px;
+  border-radius: 16px;
+  border: 1px solid #e5e7eb;
+  background: white;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+}
+
+.lab-card pre {
+  background: #0f172a;
+  color: #e5e7eb;
+  padding: 12px;
+  border-radius: 10px;
+}
+
+.lab-cta {
+  margin-top: 40px;
+  padding: 20px;
+  border-radius: 12px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+}
+`}</style>
+
 # 🚀 Blue-Green & Canary Deployment on Kubernetes
 
 <div className="lab-actions">
-
-<a href="https://github.com/bakuppus/Blue-Green-Canary-Demo-Application" target="_blank" className="lab-btn">
-💻 View Source Code
-</a>
-
-<a href="https://github.com/bakuppus/Blue-Green-Canary-Demo-Application" target="_blank" className="lab-btn primary">
-🚀 Open Playground
-</a>
-
+  <a href="https://github.com/bakuppus/Blue-Green-Canary-Demo-Application">💻 View Code</a>
+  <a href="https://github.com/bakuppus/Blue-Green-Canary-Demo-Application" className="primary">🚀 Playground</a>
 </div>
 
 ---
 
 ## ⚡ Lab Quick Insight
 
-Implement **Blue-Green and Canary deployment strategies** in Kubernetes to achieve:
+Deploy applications using **Blue-Green and Canary strategies** to achieve:
 
-- Zero downtime deployments  
-- Controlled traffic shifting  
-- Safe production releases  
+- Zero downtime  
+- Safe releases  
+- Gradual traffic control  
 
 ---
 
-## 🏗️ Architecture Diagram
+## 🏗️ Architecture
 
 ![architecture](./images/architecture.png)
 
@@ -37,11 +109,10 @@ Implement **Blue-Green and Canary deployment strategies** in Kubernetes to achie
 
 ## 🧰 Tools Used
 
-- Kubernetes (EKS / Minikube)
-- kubectl
-- Docker
-- NGINX / Service routing
-- GitHub
+- Kubernetes  
+- kubectl  
+- Docker  
+- AWS / EKS  
 
 ---
 
@@ -49,73 +120,14 @@ Implement **Blue-Green and Canary deployment strategies** in Kubernetes to achie
 
 <div className="lab-timeline">
 
-  {/* STEP 1 */}
-  <div className="lab-step">
-    <div className="lab-step-number">1</div>
+<div className="lab-step">
+<div className="lab-step-number">1</div>
 
-    <div className="lab-step-card">
-      <h3>Prerequisites</h3>
+<div className="lab-card">
 
-      <p><strong>Required Tools:</strong></p>
+### Prerequisites
 
 ```bash
-# Verify installations
 aws --version
 kubectl version
 docker --version
-  <p><strong>AWS Setup:</strong></p>
-
-  <ul>
-    <li>IAM permissions: <code>AdministratorAccess</code></li>
-    <li>AWS configured: <code>aws configure</code></li>
-    <li>Region: <code>us-east-1</code></li>
-  </ul>
-</div>
-</div>
-
-{/* STEP 2 */}
-
-<div className="lab-step"> <div className="lab-step-number">2</div>
-<div className="lab-step-card">
-  <h3>Deploy Blue Version</h3>
-kubectl apply -f blue-deployment.yaml
-kubectl apply -f service.yaml
-  <p>Blue version is now live.</p>
-</div>
-</div>
-
-{/* STEP 3 */}
-
-<div className="lab-step"> <div className="lab-step-number">3</div>
-<div className="lab-step-card">
-  <h3>Deploy Green Version</h3>
-kubectl apply -f green-deployment.yaml
-  <p>Green version deployed alongside Blue.</p>
-</div>
-</div>
-
-{/* STEP 4 */}
-
-<div className="lab-step"> <div className="lab-step-number">4</div>
-<div className="lab-step-card">
-  <h3>Switch Traffic (Blue → Green)</h3>
-kubectl patch service my-app \
--p '{"spec":{"selector":{"version":"green"}}}'
-  <p>Traffic is now routed to Green deployment.</p>
-</div>
-</div>
-
-{/* STEP 5 */}
-
-<div className="lab-step"> <div className="lab-step-number">5</div>
-<div className="lab-step-card">
-  <h3>Canary Deployment</h3>
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: canary
-spec:
-  replicas: 1
-  <p>Gradually shift traffic and monitor behavior.</p>
-</div>
-</div> </div>
