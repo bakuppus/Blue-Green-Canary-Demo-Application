@@ -131,3 +131,28 @@ Deploy applications using **Blue-Green and Canary strategies** to achieve:
 aws --version
 kubectl version
 docker --version
+
+AWS:
+
+IAM: AdministratorAccess
+Configure: aws configure
+</div> </div> <div className="lab-step"> <div className="lab-step-number">2</div> <div className="lab-card">
+Deploy Blue Version
+kubectl apply -f blue-deployment.yaml
+kubectl apply -f service.yaml
+</div> </div> <div className="lab-step"> <div className="lab-step-number">3</div> <div className="lab-card">
+Deploy Green Version
+kubectl apply -f green-deployment.yaml
+</div> </div> <div className="lab-step"> <div className="lab-step-number">4</div> <div className="lab-card">
+Switch Traffic
+kubectl patch service my-app \
+-p '{"spec":{"selector":{"version":"green"}}}'
+</div> </div> <div className="lab-step"> <div className="lab-step-number">5</div> <div className="lab-card">
+Canary Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: canary
+spec:
+  replicas: 1
+</div> </div> </div>
